@@ -5,7 +5,7 @@ import WaterBottle from '../components/WaterBottle';
 import WaterIntakeButtons from '../components/WaterIntakeButtons';
 import StatsCard from '../components/StatsCard';
 
-export default function MainScreen({ waterData, addWater, resetDaily, updateGoal, onSettingsPress }) {
+export default function MainScreen({ waterData, addWater, resetDaily, updateGoal, onSettingsPress, onLogout }) {
   const percentage = Math.min((waterData.today / waterData.goal) * 100, 100);
   const remaining = Math.max(waterData.goal - waterData.today, 0);
 
@@ -13,12 +13,22 @@ export default function MainScreen({ waterData, addWater, resetDaily, updateGoal
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
         <Text style={styles.title}>Stay Hydrated! 💧</Text>
-        <IconButton
-          icon="cog"
-          iconColor="#4A90E2"
-          size={28}
-          onPress={onSettingsPress}
-        />
+        <View style={styles.headerButtons}>
+          <IconButton
+            icon="cog"
+            iconColor="#4A90E2"
+            size={28}
+            onPress={onSettingsPress}
+          />
+          {onLogout && (
+            <IconButton
+              icon="logout"
+              iconColor="#FF6B6B"
+              size={28}
+              onPress={onLogout}
+            />
+          )}
+        </View>
       </View>
 
       <View style={styles.bottleContainer}>
@@ -67,6 +77,10 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 20,
     paddingHorizontal: 10,
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
     fontSize: 28,
